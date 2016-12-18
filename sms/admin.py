@@ -5,3 +5,4 @@ import models
 admin.site.register(models.School)
 admin.site.register(models.House)
 admin.site.register(models.Student)
+admin.site.register(models.Parent)

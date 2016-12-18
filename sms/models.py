@@ -11,6 +11,11 @@ class School(models.Model):
     def __unicode__(self):
         return self.name
 
+class Gender(models.Model):
+    name = models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return self.name
 
 class House(models.Model):
     name = models.CharField(max_length=256)
@@ -21,11 +26,13 @@ class House(models.Model):
 class Parent(models.Model):
     last_name = models.CharField(max_length=128)
     first_name = models.CharField(max_length=128)
-    gender = models.CharField(max_length=128)
+    gender = models.ForeignKey(Gender)
     email_address = models.CharField(max_length=128)
     email_address2 = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=13)
     phone_number2 = models.CharField(max_length=13, blank=True)
+    physical_address = models.TextField(null=True)
+    post_code = models.CharField(max_length=10, null=True)
 
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name
@@ -35,9 +42,37 @@ class Student(models.Model):
     last_name = models.CharField(max_length=128)
     first_name = models.CharField(max_length=128)
     date_of_birth = models.DateField()
-    gender = models.CharField(max_length=128)
+    gender = models.ForeignKey(Gender)
     house = models.ForeignKey(House)
     parent = models.ForeignKey(Parent, null=True)
 
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name
+
+class Teacher(models.Model):
+    last_name = models.CharField(max_length=128)
+    first_name = models.CharField(max_length=128)
+    gender = models.ForeignKey(Gender)
+    email_address = models.CharField(max_length=128)
+    email_address2 = models.CharField(max_length=128, blank=True)
+    phone_number = models.CharField(max_length=13)
+    phone_number2 = models.CharField(max_length=13, blank=True)
+    physical_address = models.TextField()
+
+    def __unicode__(self):
+        return self.first_name + ' ' + self.last_name
+
+class TermDates(models.Model):
+    date = models.DateField()
+    name = models.CharField(max_length=128,blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+class Attendance(models.Model):
+    term_date = models.ForeignKey(TermDates)
+    Student = models.ForeignKey(Student)
+    present = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.term_date.name + ' ' + self.Student.first_name + ' ' + self.Student.last_name

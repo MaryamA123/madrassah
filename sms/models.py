@@ -3,16 +3,15 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+GENDER_CHOICES = (
+    ('m', 'Male'),
+    ('f', 'Female')
+)
+
 class School(models.Model):
     name = models.CharField(max_length=256)
     phone = models.CharField(max_length=13)
     address = models.TextField()
-
-    def __unicode__(self):
-        return self.name
-
-class Gender(models.Model):
-    name = models.CharField(max_length=10)
 
     def __unicode__(self):
         return self.name
@@ -26,7 +25,7 @@ class House(models.Model):
 class Parent(models.Model):
     last_name = models.CharField(max_length=128)
     first_name = models.CharField(max_length=128)
-    gender = models.ForeignKey(Gender)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     email_address = models.CharField(max_length=128)
     email_address2 = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=13)
@@ -42,7 +41,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=128)
     first_name = models.CharField(max_length=128)
     date_of_birth = models.DateField()
-    gender = models.ForeignKey(Gender)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     house = models.ForeignKey(House)
     parent = models.ForeignKey(Parent, null=True)
 
@@ -52,7 +51,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     last_name = models.CharField(max_length=128)
     first_name = models.CharField(max_length=128)
-    gender = models.ForeignKey(Gender)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     email_address = models.CharField(max_length=128)
     email_address2 = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=13)

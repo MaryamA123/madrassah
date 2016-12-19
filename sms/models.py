@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.db import models
 
 
@@ -16,11 +14,13 @@ class School(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class House(models.Model):
     name = models.CharField(max_length=256)
 
     def __unicode__(self):
         return self.name
+
 
 class Parent(models.Model):
     last_name = models.CharField(max_length=128)
@@ -34,7 +34,8 @@ class Parent(models.Model):
     post_code = models.CharField(max_length=10, null=True)
 
     def __unicode__(self):
-        return self.first_name + ' ' + self.last_name
+        return "%s %s" % (self.first_name, self.last_name)
+
 
 class Student(models.Model):
     school = models.ForeignKey(School)
@@ -46,7 +47,8 @@ class Student(models.Model):
     parent = models.ForeignKey(Parent, null=True)
 
     def __unicode__(self):
-        return self.first_name + ' ' + self.last_name
+        return "%s %s" % (self.first_name, self.last_name)
+
 
 class Teacher(models.Model):
     last_name = models.CharField(max_length=128)
@@ -59,7 +61,8 @@ class Teacher(models.Model):
     physical_address = models.TextField()
 
     def __unicode__(self):
-        return self.first_name + ' ' + self.last_name
+        return "%s %s" % (self.first_name, self.last_name)
+
 
 class Term(models.Model):
     start_date = models.DateField()

@@ -61,17 +61,11 @@ class Teacher(models.Model):
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name
 
-class TermDates(models.Model):
-    date = models.DateField()
+class Term(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
     name = models.CharField(max_length=128,blank=True)
+    attendances = models.ManyToManyField(Student)
 
     def __unicode__(self):
         return self.name
-
-class Attendance(models.Model):
-    term_date = models.ForeignKey(TermDates)
-    Student = models.ForeignKey(Student)
-    present = models.BooleanField(default=False)
-
-    def __unicode__(self):
-        return self.term_date.name + ' ' + self.Student.first_name + ' ' + self.Student.last_name

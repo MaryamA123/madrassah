@@ -72,3 +72,20 @@ class Term(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class Subject(models.model):
+    subject_name = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.subject_name
+
+class Class(models.Model):
+    class_name = models.CharField(max_length=32)
+    subject = models.ForeignKey(Subject)
+    teachers = models.ForeignKey(Teacher)
+    students = models.ManyToManyField(Student)
+
+    def __unicode__(self):
+        return "%s %s %s" % (self.class_name,
+                             self.subject,
+                             self.teachers.first_name)

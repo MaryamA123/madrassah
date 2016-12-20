@@ -73,7 +73,7 @@ class Term(models.Model):
     def __unicode__(self):
         return self.name
 
-class Subject(models.model):
+class Subject(models.Model):
     subject_name = models.CharField(max_length=128)
 
     def __unicode__(self):

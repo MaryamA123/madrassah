@@ -45,6 +45,7 @@ class Student(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     house = models.ForeignKey(House)
     parent = models.ForeignKey(Parent, null=True)
+    allergy_information = models.TextField(null=True)
 
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)

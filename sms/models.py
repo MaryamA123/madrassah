@@ -82,13 +82,11 @@ class Subject(models.Model):
 class ClassGroup(models.Model):
     class_name = models.CharField(max_length=32)
     subject = models.ForeignKey(Subject)
-    teachers = models.ForeignKey(Teacher)
+    teacher = models.ForeignKey(Teacher)
     students = models.ManyToManyField(Student)
 
     def __unicode__(self):
-        return "%s %s %s %s %s %s" % (self.class_name,
-                                      'Subject:',
-                                      self.subject,
-                                      'Teacher:',
-                                      self.teachers.first_name,
-                                      self.teachers.last_name)
+        return "%s Subject: %s Teacher: %s %s" % (self.class_name,
+                                                  self.subject,
+                                                  self.teacher.first_name,
+                                                  self.teacher.last_name)

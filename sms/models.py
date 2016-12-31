@@ -109,12 +109,12 @@ class Fee(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     student = models.ForeignKey(Student)
-    amount = models.DecimalField(max_length=6, decimal_places=2)
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
     paid = models.BooleanField(default=False)
     payment_method = models.CharField(max_length=2, choices=PAYMENT_METHOD)
     receipt_number = models.IntegerField()
 
     def __unicode__(self):
-        return "Student: %s %s, Paid %s" % (self.Student.first_name,
-                                            self.Student.last_name,
+        return "Student: %s %s, Paid %s" % (self.student.first_name,
+                                            self.student.last_name,
                                             self.paid)

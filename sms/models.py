@@ -6,6 +6,17 @@ GENDER_CHOICES = (
     ('f', 'Female')
 )
 
+STUDENT_STATUS = (
+    ('a', 'Active'),
+    ('p', 'Prospective'),
+    ('x', 'Inactive')
+)
+
+PAYMENT_METHOD = (
+    ('CQ', 'Cheque'),
+    ('CS', 'Cash')
+)
+
 class School(models.Model):
     name = models.CharField(max_length=256)
     phone = models.CharField(max_length=13)
@@ -43,10 +54,11 @@ class Student(models.Model):
     first_name = models.CharField(max_length=128)
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    status = models.CharField(max_length=1, choices=STUDENT_STATUS)
     house = models.ForeignKey(House)
     parent = models.ForeignKey(Parent, null=True)
-    allergy_information = models.TextField(null=True)
-    photo_permitted = models.BooleanField(default=False)
+    medical_information = models.TextField(null=True)
+    photo_permitted = models.BooleanField(default=True)
 
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
@@ -56,6 +68,7 @@ class Teacher(models.Model):
     last_name = models.CharField(max_length=128)
     first_name = models.CharField(max_length=128)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    status = models.CharField(max_length=1, choices=STUDENT_STATUS)
     email_address = models.CharField(max_length=128)
     email_address2 = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=13)
@@ -92,3 +105,16 @@ class ClassGroup(models.Model):
                                                   self.subject,
                                                   self.teacher.first_name,
                                                   self.teacher.last_name)
+class Fee(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    student = models.ForeignKey(Student)
+    amount = models.DecimalField(max_length=6, decimal_places=2)
+    paid = models.BooleanField(default=False)
+    payment_method = models.CharField(max_length=2, choices=PAYMENT_METHOD)
+    receipt_number = models.IntegerField()
+
+    def __unicode__(self):
+        return "Student: %s %s, Paid %s" % (self.Student.first_name,
+                                            self.Student.last_name,
+                                            self.paid)

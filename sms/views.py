@@ -10,6 +10,5 @@ def sms(request):
 
 def houses(request):
     all_houses = House.objects.all()
-    output = []
     output = [h.name for h in all_houses]
     return render(request, 'sms\houses.html', {'output' : output})

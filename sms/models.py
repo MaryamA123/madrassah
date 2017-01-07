@@ -60,6 +60,9 @@ class Student(models.Model):
     medical_information = models.TextField(null=True)
     photo_permitted = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["-last_name"]
+
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
@@ -79,9 +82,8 @@ class Teacher(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
 
-class Term(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
+class TermDate(models.Model):
+    date = models.DateField()
     name = models.CharField(max_length=128,blank=True)
     attendances = models.ManyToManyField(Student)
 
